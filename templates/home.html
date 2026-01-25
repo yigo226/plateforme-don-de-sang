@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="text-center">
+  <h1 class="fw-bold text-danger">Donner du sang sauve des vies</h1>
+  <p class="lead">Trouvez ou proposez un don de sang près de chez vous</p>
+
+  <a href="{% url 'register' %}" class="btn btn-danger btn-lg me-2">Je veux donner</a>
+  <a href="{% url 'request_blood' %}" class="btn btn-outline-danger btn-lg">Besoin de sang</a>
+</div>
+{% endblock %}
