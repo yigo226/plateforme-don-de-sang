@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Ajout des applications personnalisées sinon les modèles ne seront pas reconnus
     'comptes',
 ]
 
@@ -59,6 +60,7 @@ ROOT_URLCONF = 'dondesang.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        # Ajout du répertoire des templates
         'DIRS': [BASE_DIR / 'templates',],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -77,6 +79,9 @@ WSGI_APPLICATION = 'dondesang.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+# Configure la base de données MySQL en utilisant les variables d'environnement
+# Les variables d'environnement sont définies dans un fichier .env
+# C'est un minimun pour la sécurité et la portabilité
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -88,7 +93,7 @@ DATABASES = {
     }
 }
 
-#
+# Spécifie le modèle utilisateur personnalisé
 AUTH_USER_MODEL = 'comptes.Utilisateur'
 
 

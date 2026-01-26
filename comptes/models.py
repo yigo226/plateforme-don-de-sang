@@ -2,40 +2,24 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-
 class Utilisateur(AbstractUser):
 
-    email = models.EmailField(
-        unique=True,
-        verbose_name=_("Adresse email")
-    )
+    class Role(models.TextChoices):
+        DONNEUR = 'DONNEUR', 'Donneur'
+        HOPITAL = 'HOPITAL', 'Hôpital'
+        ADMIN = 'ADMIN', 'Administrateur'
 
-    telephone = models.CharField(
+    role = models.CharField(
         max_length=20,
-        verbose_name=_("Téléphone")
+        choices=Role.choices,
+        default=Role.DONNEUR
     )
+    email = models.EmailField(unique=True)
+    telephone = models.CharField(max_length=20, blank=True)
+    ville = models.CharField(max_length=100, blank=True)
 
-    ville = models.CharField(
-        max_length=100,
-        verbose_name=_("Ville")
-    )
-
-    est_patient = models.BooleanField(
-        default=False,
-        verbose_name=_("Est patient")
-    )
-
-    est_donneur = models.BooleanField(
-        default=False,
-        verbose_name=_("Est donneur")
-    )
-
-    recevoir_notifications = models.BooleanField(
-        default=True,
-        verbose_name=_("Recevoir des notifications")
-    )
-
-    REQUIRED_FIELDS = ["email"]
-
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []  
+    
     def __str__(self):
-        return self.username
+        return self.email
