@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # Ajout des applications personnalisées sinon les modèles ne seront pas reconnus
     'comptes',
     'donneurs',
+    'hopitaux',
 ]
 
 MIDDLEWARE = [

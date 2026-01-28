@@ -22,5 +22,7 @@ urlpatterns = [
     #path('comptes/', include('comptes.urls')),
     path('', include('comptes.urls')),
     path('donneurs/', include('donneurs.urls')),
+    path('hopitaux/', include('hopitaux.urls')),
+
 
 ]
