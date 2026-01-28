@@ -22,11 +22,19 @@
     <div class="navbar-nav me-auto mb-2 mb-lg-0 ">
         <a href="{% url 'liste_utilisateurs' %}" class="btn btn-primary">
             Les utilisateurs
-        </a>
-        <a href="{% url 'inscription' %}" class="btn btn-success">
-            + S'inscrire
-        </a>
- 
+        {% if user.is_authenticated %}
+            <a href="{% url 'deconnexion' %}" class="btn btn-warning">
+                Se déconnecter  </a>
+        {% else %}
+            <!-- connexion -->
+            <a href="{% url 'connexion' %}" class="btn btn-info">
+                Se connecter
+            </a> 
+            <!-- inscription -->
+            <a href="{% url 'inscription' %}" class="btn btn-success">
+                S'inscrire
+            </a>
+        {% endif %}
 
     </div>
     </nav>

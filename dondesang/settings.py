@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Ajout des applications personnalisées sinon les modèles ne seront pas reconnus
     'comptes',
+    'donneurs',
 ]
 
 MIDDLEWARE = [
@@ -95,7 +96,6 @@ DATABASES = {
 
 # Spécifie le modèle utilisateur personnalisé
 AUTH_USER_MODEL = 'comptes.Utilisateur'
-
 
 
 # Password validation

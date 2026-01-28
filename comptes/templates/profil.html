@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Mon profil</h2>
+
+<ul>
+    <li> <p><strong>Nom utilisateur  :</strong> {{ user.identifiant }} </p> </li>
+    <li><strong>Email :</strong> {{ user.email }}</li>
+    <li><strong>Prénom :</strong> {{ user.first_name }}</li>
+    <li><strong>Nom :</strong> {{ user.last_name }}</li>
+    {% if user.date_naissance %}
+        <li><strong>Date de naissance :</strong> {{ user.date_naissance }}</li>
+        <li><strong>Âge :</strong> {{ user.age }}</li>
+    {% endif %}
+    {% if user.telephone %}
+        <li><strong>Téléphone :</strong> {{ user.telephone }}</li>
+    {% endif %}
+    {% if user.ville %}
+        <li><strong>Ville :</strong> {{ user.ville }}</li>
+    {% endif %}
+    <li><strong>Rôle :</strong> {{ user.get_role_display }}</li>
+</ul>
+
+{% endblock %}

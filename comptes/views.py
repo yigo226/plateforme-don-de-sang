@@ -1,31 +1,35 @@
 from django.shortcuts import render, redirect
 from .models import Utilisateur
-from .forms import InscriptionDonneurForm
+from .forms import InscriptionForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 
 # Create your views here.
 
-# Page d'accueil
+# Accueil
 def accueil(request):
-    return render(request, 'index.html')
+    context = {}
+    if request.user.is_authenticated:
+        context['utilisateur_connecte'] = request.user   
+    return render(request, 'index.html', context)
 
-# Inscription d'un donneur
+# Inscription d'un DEMANDEUR
 def inscription(request):
     if request.method == 'POST':
-        form = InscriptionDonneurForm(request.POST)
+        form = InscriptionForm(request.POST)
         if form.is_valid():
             utilisateur = form.save(commit=False)
-            utilisateur.role = Utilisateur.Role.DONNEUR
+            utilisateur.role = Utilisateur.Role.DEMANDEUR
             utilisateur.set_password(form.cleaned_data['password1'])
             utilisateur.save()
             login(request, utilisateur)
             return redirect('accueil')
     else:
-        form = InscriptionDonneurForm()
+        form = InscriptionForm()
 
     return render(request, 'inscription.html', {'form': form})
-
 
 
 # connexion d'un utilisateur
@@ -49,9 +53,22 @@ def deconnexion(request):
     return redirect('connexion')
 
 
+# Profil utilisateur
+@login_required
+def profil_utilisateur(request):
+    user = request.user
+    return render(request, 'profil.html',  {'user': user})
+
+
 # Liste des utilisateurs
+@login_required
 def liste_utilisateurs(request):
-    utilisateurs = Utilisateur.objects.all()
+
+    if request.user.role != request.user.Role.ADMIN:
+        raise PermissionDenied
+    else:
+        utilisateurs = Utilisateur.objects.all()
+
     return render(request, 'liste_utilisateurs.html', {
         'utilisateurs': utilisateurs
     })

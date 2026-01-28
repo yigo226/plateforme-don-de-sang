@@ -1,0 +1,12 @@
+from django.shortcuts import redirect
+from django.contrib import messages
+
+def role_required(role):
+    def decorator(view_func):
+        def _wrapped_view(request, *args, **kwargs):
+            if request.user.role != role:
+                messages.error(request, "Accès non autorisé")
+                return redirect('dashboard')
+            return view_func(request, *args, **kwargs)
+        return _wrapped_view
+    return decorator

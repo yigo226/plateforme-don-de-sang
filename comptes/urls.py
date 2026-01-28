@@ -13,6 +13,8 @@ urlpatterns = [
     path('connexion/', views.connexion, name='connexion'),
     path('deconnexion/', views.deconnexion, name='deconnexion'),
 
+    path('profil/', views.profil_utilisateur, name='profil_utilisateur'),
+    
     #liste des utilisateurs
     path('users/', views.liste_utilisateurs, name='liste_utilisateurs'),
     

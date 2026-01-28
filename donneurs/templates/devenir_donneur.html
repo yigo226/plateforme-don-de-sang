@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Devenir donneur</h2>
+<p>Veuillez compléter vos informations pour devenir donneur.</p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Valider</button>
+</form>
+{% endblock %}

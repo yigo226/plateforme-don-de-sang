@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Mon Profil Donneur</h2>
+
+<ul>
+    <li><strong>Nom utilisateur :</strong> {{ user.identifiant }}</li>
+    <li><strong>Nom et Prénom :</strong> {{ user.first_name }} {{ user.last_name }}</li>
+    <li><strong>Email :</strong> {{ user.email }}</li>
+    <li><strong>Âge :</strong> {{ profil.age }}</li>
+    <li><strong>Poids :</strong> {{ profil.poids }} kg</li>
+    <li>
+        <strong>Dernier don :</strong>
+        {% if profil.date_dernier_don %}
+            {{ profil.date_dernier_don|date:"d/m/Y" }}
+        {% else %}
+            <em>Aucun don enregistré</em>
+        {% endif %}
+    </li>
+
+    <li><strong>Groupe sanguin :</strong> {{ profil.groupe_sanguin }}</li>
+    <li><strong>Groupe sanguin confirmé :</strong> {{ profil.groupe_sanguin_verrouille }}</li>
+</ul>
+
+<a href="{% url 'modifier_profil_donneur' %}">Modifier mon profil</a>
+
+{% endblock %}
