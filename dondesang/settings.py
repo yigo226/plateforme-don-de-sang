@@ -42,10 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Ajout des applications personnalisées sinon les modèles ne seront pas reconnus
-    'comptes',
-    'donneurs',
-    'hopitaux',
-    'dons',
+    
+    'comptes', # Application de gestion des comptes utilisateurs    
+    'donneurs', # Application de gestion des donneurs
+    'hopitaux', # Application de gestion des hôpitaux
+    'dons', # Application de gestion des dons de sang
+    'stocks', # Application de gestion des stocks de sang
+    'demandes', # Application de gestion des demandes de sang
 ]
 
 MIDDLEWARE = [

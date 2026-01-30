@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-
+from stocks.models import StockSang
 from comptes.models import Utilisateur
 from .models import Don
 from .forms import DeclarationDonForm, ValidationDonForm
@@ -82,6 +82,14 @@ def valider_don(request, don_id):
             donneur.date_dernier_don = don.date_don
             don.groupe_sanguin = donneur.groupe_sanguin
             donneur.save()
+
+            stock, created = StockSang.objects.get_or_create(
+                hopital=hopital,
+                groupe_sanguin=don.groupe_sanguin
+            )
+
+            stock.volume_ml += don.volume_ml
+            stock.save()
 
             messages.success(request, "Don validé avec succès.")
             return redirect('dons_a_valider')
