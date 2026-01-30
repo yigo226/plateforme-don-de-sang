@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'comptes',
     'donneurs',
     'hopitaux',
+    'dons',
 ]
 
 MIDDLEWARE = [

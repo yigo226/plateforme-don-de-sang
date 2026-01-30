@@ -23,6 +23,6 @@ urlpatterns = [
     path('', include('comptes.urls')),
     path('donneurs/', include('donneurs.urls')),
     path('hopitaux/', include('hopitaux.urls')),
-
+    path('dons/', include('dons.urls')),
 
 ]

@@ -45,6 +45,12 @@ class ProfilDonneur(models.Model):
         blank=True,
         verbose_name="Date du dernier don"
     )
+    
+    def peut_donner(self):
+        if not self.date_dernier_don:
+            return True
+        return timezone.now().date() >= self.date_dernier_don + timedelta(days=90)
+
 
     def clean(self):
         if self.age() < 18:

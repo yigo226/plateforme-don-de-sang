@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<h2>Validation du don</h2>
+
+<p>Donneur : {{ don.donneur.utilisateur.email }}</p>
+<p>Date : {{ don.date_don }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Valider le don</button>
+</form>
+
+{% endblock %}

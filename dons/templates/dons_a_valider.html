@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Dons à valider</h2>
+
+    <ul>
+    {% for don in dons %}
+        <li>
+        Nom d'utilisateur : {{ don.donneur.utilisateur.identifiant }}    - Date :
+            {{ don.date_don }}
+            <a href="{% url 'valider_don' don.id %}">Valider</a>
+        </li>
+    {% empty %}
+        <li>Aucun don en attente</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
