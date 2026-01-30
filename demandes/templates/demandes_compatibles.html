@@ -1,0 +1,14 @@
+<h2>Demandes compatibles dans votre ville</h2>
+
+{% for d in demandes %}
+<div>
+    <strong>{{ d.groupe_sanguin }}</strong> requis<br>
+    Ville : {{ d.ville }}<br>
+    Hôpital : {{ d.hopital_affiche }}<br>
+    Motif : {{ d.motif }}<br>
+    📞 Contact : {{ d.contact }}
+</div>
+<hr>
+{% empty %}
+<p>Aucune demande pour le moment.</p>
+{% endfor %}

@@ -1,0 +1,17 @@
+<h2>Mes demandes</h2>
+
+{% for d in demandes %}
+<div>
+    <strong>{{ d.groupe_sanguin }}</strong> – {{ d.statut }}<br>
+    {{ d.ville }} | {{ d.hopital_affiche }}<br>
+
+    {% if d.statut == 'ACTIVE' %}
+        <a href="{% url 'cloturer_demande' d.id %}">
+            Marquer comme satisfaite
+        </a>
+    {% endif %}
+</div>
+<hr>
+{% empty %}
+<p>Aucune demande.</p>
+{% endfor %}

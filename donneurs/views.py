@@ -1,4 +1,5 @@
 # Create your views here.
+from urllib import request
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import ProfilDonneurForm, ProfilDonneurUpdateForm
@@ -6,10 +7,16 @@ from django.contrib import messages
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from comptes.models import Utilisateur
+from django.core.exceptions import PermissionDenied
 
 @login_required
 def devenir_donneur(request):
     user = request.user
+
+    # ADMIN et HÔPITAL interdits
+    if user.role in [user.Role.ADMIN, user.Role.HOPITAL]:
+        raise PermissionDenied("Accès réservé aux donneurs")
+
     if hasattr(user, 'donneur'):
         messages.info(request, "Vous êtes déjà donneur.")
         return redirect('profil_utilisateur')
@@ -33,20 +40,32 @@ def devenir_donneur(request):
 @login_required
 def profil_donneur(request):
     user = request.user
-    profil = getattr(user, 'role', None)
-    if not profil:
+
+    # ADMIN et HÔPITAL interdits
+    if user.role in [user.Role.ADMIN, user.Role.HOPITAL]:
+        raise PermissionDenied("Accès réservé aux donneurs")
+
+    # Utilisateur normal mais pas encore donneur
+    if user.role != user.Role.DONNEUR:
         messages.info(request, "Vous n'êtes pas encore donneur.")
         return redirect('devenir_donneur')
-    else :
-        profil = request.user.profil_donneur
+
+    # DONNEUR : on récupère son profil
+    profil = user.profil_donneur
+
     return render(request, 'profil_donneur.html', {
         'profil': profil,
-        'user': user}
-        )
+        'user': user
+    })
+
 
 # Modifier le profil donneur
 @login_required
 def modifier_profil_donneur(request):
+    # ADMIN et HÔPITAL interdits
+    if request.user.role in [request.user.Role.ADMIN, request.user.Role.HOPITAL]:
+        raise PermissionDenied("Accès réservé aux donneurs")
+
     profil = request.user.profil_donneur
 
     if request.method == 'POST':

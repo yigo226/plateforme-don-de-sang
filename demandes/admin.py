@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import DemandeSang
 
-# Register your models here.
+#Enregistrer l’admin
+admin.site.register(DemandeSang)

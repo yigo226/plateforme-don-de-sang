@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block titre %}Utilisateur{% endblock %}
+
+{% block content %}
+<h2>Demandes reçues</h2>
+
+<table border="1">
+<tr>
+    <th>Demandeur</th>
+    <th>Groupe</th>
+    <th>Volume</th>
+    <th>Date</th>
+</tr>
+
+{% for d in demandes %}
+<tr>
+    <td>{{ d.auteur.username }}</td>
+    <td>{{ d.groupe_sanguin }}</td>
+    <td>{{ d.volume_ml }} ml</td>
+    <td>{{ d.date_demande }}</td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}
