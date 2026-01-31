@@ -22,7 +22,7 @@ SELECT
 FROM dons_don d
 JOIN donneurs_profildonneur pd ON d.donneur_id = pd.id
 JOIN comptes_utilisateur u ON pd.utilisateur_id = u.id
-WHERE pd.groupe_sanguin = 'A+';
+WHERE pd.groupe_sanguin = 'O-';
 
 # Total de collecter par groupe sanguin
 SELECT 
@@ -35,5 +35,15 @@ WHERE d.valide = 1
 GROUP BY pd.groupe_sanguin;
 
 # 
+SELECT 
+    u.id,
+    u.last_name AS nom,
+    u.first_name AS prenom,
+    u.email,
+    u.ville,
+    pd.groupe_sanguin
+FROM comptes_utilisateur u
+INNER JOIN donneurs_profildonneur pd ON u.id = pd.utilisateur_id
+WHERE pd.groupe_sanguin = 'B-';
 
 
