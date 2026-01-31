@@ -22,12 +22,12 @@ class DemandeSangForm(forms.ModelForm):
     def __init__(self, *args, user=None, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # 🛡️ sécurité absolue
+        # sécurité absolue
         if not user:
             self.fields.pop('volume_ml', None)
             return
 
-        # 🔐 Cas non hôpital
+        # Cas non hôpital
         if user.role != Utilisateur.Role.HOPITAL:
             self.fields.pop('volume_ml', None)
 

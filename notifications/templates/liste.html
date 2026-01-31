@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block titre %}Utilisateur{% endblock %}
+
+{% block content %} 
+
+<h2>Mes notifications</h2>
+{% for notif in notifications %}
+
+  <div class="{% if not notif.lu %}non-lu{% endif %}">
+    {{ notif.message }}
+    <a href="{{ notif.lien }}">Voir</a>
+  </div>
+
+ 
+{% empty %}
+  <p>Aucune notification</p>
+{% endfor %}
+
+{% endblock %}

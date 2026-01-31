@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'dons', # Application de gestion des dons de sang
     'stocks', # Application de gestion des stocks de sang
     'demandes', # Application de gestion des demandes de sang
+    'notifications', # Application de gestion des notifications
 ]
 
 MIDDLEWARE = [

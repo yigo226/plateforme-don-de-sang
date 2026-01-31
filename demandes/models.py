@@ -44,7 +44,7 @@ class DemandeSang(models.Model):
         choices=ProfilDonneur.GROUPE_SANGUIN
     )
 
-    # 🩸 Volume
+    # Volume
     volume_ml = models.PositiveIntegerField(
         default=450,
         help_text="450 ml par défaut pour un patient"
@@ -64,16 +64,25 @@ class DemandeSang(models.Model):
 
     date_demande = models.DateTimeField(auto_now_add=True)
 
-    def clean(self):
-        # hôpital doit préciser le volume
-        if self.hopital and self.volume_ml <= 0:
-            raise ValidationError(
-                "Un hôpital doit préciser le volume de sang recherché."
-            )
 
-        # non hôpital → une seule poche
-        if not self.hopital:
-            self.volume_ml = 450
+    def clean(self):
+
+        # 🔐 Sécurité : auteur pas encore injecté
+        if not self.auteur_id:
+            return
+
+        est_hopital = self.auteur.role == Utilisateur.Role.HOPITAL
+
+        # 🏥 CAS HÔPITAL
+        if est_hopital:
+            if not self.volume_ml or self.volume_ml < 300:
+                raise ValidationError(
+                    "Un hôpital doit préciser un volume de sang valide (≥ 300 ml)."
+                )
+            return
+
+        # 👤 CAS NON HÔPITAL (demandeur / donneur)
+        self.volume_ml = 450
 
         if not self.hopital and not self.hopital_autre:
             raise ValidationError(
@@ -82,3 +91,11 @@ class DemandeSang(models.Model):
 
     def __str__(self):
         return f"{self.groupe_sanguin} - {self.volume_ml}ml ({self.ville})"
+
+# demandes/models.py
+class ReponseDonneur(models.Model):
+    demande = models.ForeignKey(DemandeSang, on_delete=models.CASCADE)
+    donneur = models.ForeignKey(ProfilDonneur, on_delete=models.CASCADE)
+    message = models.TextField(blank=True)
+    date_reponse = models.DateTimeField(auto_now_add=True)
+    accepte = models.BooleanField(default=False)

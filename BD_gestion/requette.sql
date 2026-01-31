@@ -11,7 +11,6 @@ SELECT * FROM donneurs_profildonneur;
 select * from dons_don;
 
 # Afficher des utilisateurs  ayant le groupes sanguin x
-
 SELECT 
     d.id,
     d.date_don,
