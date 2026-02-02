@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard Donneur{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+
+        <!-- COLONNE GAUCHE : ACTIONS -->
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-header bg-danger text-white">
+                    Actions rapides
+                </div>
+
+                <div class="card-body d-grid gap-3">
+                    <a href="#" class="btn btn-outline-danger">
+                        🩸 Déclarer un don
+                    </a>
+
+                    <a href="#" class="btn btn-outline-danger">
+                        📅 Voir mes rendez-vous
+                    </a>
+
+                    <a href="#" class="btn btn-outline-danger">
+                        📄 Mon profil
+                    </a>
+
+                    <a href="#" class="btn btn-outline-secondary">
+                        🔔 Notifications
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- COLONNE DROITE : DASHBOARD -->
+        <div class="col-md-8">
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-success text-white">
+                    Tableau de bord
+                </div>
+
+                <div class="card-body">
+                    <div class="row text-center">
+
+                        <div class="col-md-4 mb-3">
+                            <div class="border rounded p-3">
+                                <h6>Groupe sanguin</h6>
+                                <h4 class="text-danger">{{ profil.groupe_sanguin }}</h4>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <div class="border rounded p-3">
+                                <h6>Dernier don</h6>
+                                <p>{{ profil.derniere_date_don|default:"Aucun" }}</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <div class="border rounded p-3">
+                                <h6>Disponibilité</h6>
+                                <span class="badge bg-success">Disponible</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Message intelligent -->
+            <div class="alert alert-warning">
+                💡 <strong>Conseil :</strong> Vous pouvez donner du sang tous les 3 mois.
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

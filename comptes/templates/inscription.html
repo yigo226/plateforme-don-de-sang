@@ -1,20 +1,95 @@
 {% extends 'base.html' %}
 
-{% block titre %}Utilisateur{% endblock %}
+{% block title %}Inscription{% endblock %}
 
 {% block content %}
-<h2>Formulaire utilisateur</h2>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
 
-<form method="post">
-    {% csrf_token %}
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-success text-white text-center py-3">
+                    <h4 class="mb-0">Créer un compte</h4>
+                    <small>Rejoignez la plateforme de don de sang</small>
+                </div>
 
-    {{ form.as_p }}
+                <div class="card-body p-4">
+                    <form method="post">
+                        {% csrf_token %}
 
-    <button type="submit" class="btn btn-success">
-        Enregistrer
-    </button>
-    <a href="{% url 'liste_utilisateurs' %}" class="btn btn-secondary">
-        Annuler
-    </a>
-</form>
+                        <!-- NOM & PRÉNOM -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Nom</label>
+                                {{ form.last_name }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Prénom</label>
+                                {{ form.first_name }}
+                            </div>
+                        </div>
+
+                        <!-- DATE NAISSANCE & VILLE -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Date de naissance</label>
+                                {{ form.date_naissance }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Ville</label>
+                                {{ form.ville }}
+                            </div>
+                        </div>
+
+                        <!-- EMAIL & CONTACT -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Email</label>
+                                {{ form.email }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Téléphone</label>
+                                {{ form.telephone }}
+                            </div>
+                        </div>
+
+                        <!-- MOT DE PASSE -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">Mot de passe</label>
+                                {{ form.password1 }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Confirmer le mot de passe</label>
+                                {{ form.password2 }}
+                            </div>
+                        </div>
+
+                        <!-- BOUTONS -->
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-success btn-lg px-4">
+                                Enregistrer
+                            </button>
+
+                            <a href="{% url 'liste_utilisateurs' %}" class="btn btn-outline-secondary btn-lg px-4">
+                                Annuler
+                            </a>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="card-footer text-center bg-light">
+                    <p class="mb-0">
+                        Déjà inscrit ?
+                        <a href="{% url 'connexion' %}" class="text-success fw-bold">
+                            Se connecter
+                        </a>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 {% endblock %}

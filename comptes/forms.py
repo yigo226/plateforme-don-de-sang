@@ -18,10 +18,12 @@ class InscriptionForm(forms.ModelForm):
             'telephone',
             'ville'
         ]
+    
 
     def clean(self):
         cleaned_data = super().clean()
-
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
         if cleaned_data.get('password1') != cleaned_data.get('password2'):
             self.add_error('password2', "Les mots de passe ne correspondent pas")
 

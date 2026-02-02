@@ -1,3 +1,4 @@
+from urllib import request
 from django.shortcuts import render, redirect
 from .models import Utilisateur
 from .forms import InscriptionForm
@@ -72,3 +73,13 @@ def liste_utilisateurs(request):
     return render(request, 'liste_utilisateurs.html', {
         'utilisateurs': utilisateurs
     })
+
+@login_required
+def dashboard_don(request):
+    print("Appel effectue")
+    if request.user.role != Utilisateur.Role.DONNEUR:
+            messages.error(request, "Accès réservé aux donneurs.")
+            return redirect('accueil')  
+    else: 
+        print("Rendu du template")
+        return render(request, 'dashboard_donneur.html')

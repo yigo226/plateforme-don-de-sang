@@ -11,7 +11,7 @@ from notifications.models import Notification
 
 # Create your views here.
 
-
+@login_required
 def creer_demande(request):
     if request.method == 'POST':
         form = DemandeSangForm(request.POST, user=request.user)

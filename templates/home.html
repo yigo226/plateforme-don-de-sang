@@ -1,11 +1,59 @@
 {% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Accueil" %}{% endblock %}
 
 {% block content %}
-<div class="text-center">
-  <h1 class="fw-bold text-danger">Donner du sang sauve des vies</h1>
-  <p class="lead">Trouvez ou proposez un don de sang près de chez vous</p>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
 
-  <a href="{% url 'register' %}" class="btn btn-danger btn-lg me-2">Je veux donner</a>
-  <a href="{% url 'request_blood' %}" class="btn btn-outline-danger btn-lg">Besoin de sang</a>
+            <!-- Section Hero / Call-to-action -->
+            <h1 class="fw-bold text-danger mb-3">
+                Donner du sang sauve des vies ❤️
+            </h1>
+
+            <p class="lead text-secondary mb-4">
+                Trouvez ou proposez un don de sang près de chez vous
+            </p>
+
+            <div class="d-flex justify-content-center gap-3 mb-4">
+                <a href="{% url 'inscription' %}" class="btn btn-danger btn-lg px-4">
+                    Je veux donner
+                </a>
+
+                <a href="#" class="btn btn-outline-danger btn-lg px-4">
+                    Besoin de sang
+                </a>
+            </div>
+
+            <!-- Section utilisateur connecté / visiteur -->
+            {% if user.is_authenticated %}
+                <div class="alert alert-success py-3">
+                    <h4>Bonjour {{ user.identifiant }} !</h4>
+                    <p>Votre rôle est : <strong>{{ user.role }}</strong></p>
+
+                    <!-- Boutons rapides selon rôle -->
+                    {% if user.role == 'DONNEUR' %}
+                        <a href="{% url 'profil_donneur' %}" class="btn btn-danger me-2">Mon profil donneur</a>
+                        <a href="{% url 'historique_dons' %}" class="btn btn-outline-danger">Mes dons</a>
+                    {% elif user.role == 'HOPITAL' %}
+                        <a href="{% url 'dashboard_hopital' %}" class="btn btn-danger">Dashboard Hôpital</a>
+                    {% endif %}
+                </div>
+            {% else %}
+                <div class="alert alert-info py-3">
+                    <h4>Vous êtes un visiteur !</h4>
+                    <p>Veuillez vous connecter ou vous inscrire pour accéder à plus de fonctionnalités.</p>
+
+                    <div class="d-flex justify-content-center gap-3 mt-3">
+                        <a href="{% url 'connexion' %}" class="btn btn-info btn-lg">Se connecter</a>
+                        <a href="{% url 'inscription' %}" class="btn btn-success btn-lg">S'inscrire</a>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
 </div>
 {% endblock %}
