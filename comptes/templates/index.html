@@ -18,14 +18,14 @@
     <div class="container py-5 text-center">
         {% if user.is_authenticated %}
             {% if user.role == 'DEMANDEUR' %}
-                <a href="{% url 'inscription' %}" class="btn btn-light btn-lg px-4">
+                <a href="{% url 'creer_demande' %}" class="btn btn-light btn-lg px-4">
                     Besoin de sang
                 </a>
-                <a href="{% url 'creer_demande' %}" class="btn btn-outline-light btn-lg px-4">
+                <a href="{% url 'devenir_donneur' %}" class="btn btn-outline-light btn-lg px-4">
                     Devenir un donneur de sang
                 </a>
             {% elif user.role == 'DONNEUR' %}
-                <a href="{% url 'inscription' %}" class="btn btn-light btn-lg px-4">
+                <a href="{% url 'declarer_don' %}" class="btn btn-light btn-lg px-4">
                     Donner du sang
                 </a>
                 <a href="{% url 'dashboard_don' %}" class="btn btn-outline-light btn-lg px-4">
@@ -40,11 +40,11 @@
             {% endif %}
         {% else %}
             <div class="d-flex justify-content-center gap-3 flex-wrap">
-                <a href="{% url 'inscription' %}" class="btn btn-light btn-lg px-4">
+                <a href="{% url 'declarer_don' %}" class="btn btn-light btn-lg px-4">
                     Je veux donner du sang
                 </a>
 
-                <a href="#" class="btn btn-outline-light btn-lg px-4">
+                <a href="{% url 'creer_demande' %}" class="btn btn-outline-light btn-lg px-4">
                     J'ai besoin de sang
                 </a>
             </div>

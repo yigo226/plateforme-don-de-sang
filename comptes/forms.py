@@ -22,8 +22,6 @@ class InscriptionForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        for field in self.fields.values():
-            field.widget.attrs.update({'class': 'form-control'})
         if cleaned_data.get('password1') != cleaned_data.get('password2'):
             self.add_error('password2', "Les mots de passe ne correspondent pas")
 
@@ -44,6 +42,13 @@ class InscriptionForm(forms.ModelForm):
             utilisateur.save()
         return utilisateur
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            field.widget.attrs.update({
+                'class': 'form-control',
+            })
 
 # Profil utilisateur 
 class ProfilUtilisateurForm(forms.ModelForm):

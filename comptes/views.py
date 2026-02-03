@@ -18,40 +18,46 @@ def accueil(request):
 
 # Inscription d'un DEMANDEUR
 def inscription(request):
-    if request.method == 'POST':
-        form = InscriptionForm(request.POST)
-        if form.is_valid():
-            utilisateur = form.save(commit=False)
-            utilisateur.role = Utilisateur.Role.DEMANDEUR
-            utilisateur.set_password(form.cleaned_data['password1'])
-            utilisateur.save()
-            login(request, utilisateur)
-            return redirect('accueil')
+    if request.user.is_authenticated:
+        return redirect('accueil')
     else:
-        form = InscriptionForm()
+        if request.method == 'POST':
+            form = InscriptionForm(request.POST)
+            if form.is_valid():
+                utilisateur = form.save(commit=False)
+                utilisateur.role = Utilisateur.Role.DEMANDEUR
+                utilisateur.set_password(form.cleaned_data['password1'])
+                utilisateur.save()
+                login(request, utilisateur)
+                return redirect('connexion')
+        else:
+            form = InscriptionForm()
 
-    return render(request, 'inscription.html', {'form': form})
+        return render(request, 'inscription.html', {'form': form})
 
 
 # connexion d'un utilisateur
 def connexion(request):
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        utilisateur = authenticate(request, email=email, password=password)  # important
+    if request.user.is_authenticated:
+        return redirect('accueil')
+    else:
+        if request.method == 'POST':
+            email = request.POST.get('email')
+            password = request.POST.get('password')
+            utilisateur = authenticate(request, email=email, password=password)  # important
 
-        if utilisateur is not None:
-            login(request, utilisateur)
-            return redirect('accueil')
-        else:
-            messages.error(request, "Email ou mot de passe incorrect")
+            if utilisateur is not None:
+                login(request, utilisateur)
+                return redirect('accueil')
+            else:
+                messages.error(request, "Email ou mot de passe incorrect")
 
-    return render(request, 'connexion.html')
+        return render(request, 'connexion.html')
 
 # deconnexion d'un utilisateur
 def deconnexion(request):
     logout(request)
-    return redirect('connexion')
+    return redirect('accueil')
 
 
 # Profil utilisateur
