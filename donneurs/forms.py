@@ -1,3 +1,4 @@
+from dataclasses import field
 from django import forms
 from .models import ProfilDonneur
 
@@ -11,6 +12,9 @@ class ProfilDonneurForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
+
         # Si le groupe sanguin est verrouillé, on désactive le champ
         if self.instance and self.instance.groupe_sanguin_verrouille:
             self.fields['groupe_sanguin'].disabled = True

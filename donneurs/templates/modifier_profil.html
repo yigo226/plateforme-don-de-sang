@@ -1,10 +1,52 @@
 {% extends "base.html" %}
-{% block content %}
-<h2>Modifier mon profil donneur</h2>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Mettre à jour</button>
-</form>
+{% block title %}Modifier Profil Donneur{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-warning text-dark text-center py-3">
+                    <h4 class="mb-0">Modifier mon Profil Donneur</h4>
+                    <small>Mettez à jour vos informations personnelles</small>
+                </div>
+
+                <div class="card-body p-4">
+                    <p class="text-center mb-4">
+                        Assurez-vous que vos informations sont correctes et à jour.
+                    </p>
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <!-- Champs du formulaire -->
+                        <div class="mb-3">
+                            {{ form }}
+                        </div>
+
+                        <!-- Boutons -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{% url 'dashboard_don' %}" class="btn btn-outline-secondary btn-lg">
+                                Annuler
+                            </a>
+
+                            <button type="submit" class="btn btn-warning btn-lg">
+                                Mettre à jour
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card-footer text-center bg-light">
+                    <small>
+                        Vos informations sont confidentielles et protégées par notre politique de sécurité.
+                    </small>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 {% endblock %}

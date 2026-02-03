@@ -1,13 +1,14 @@
 # Create your views here.
+from dataclasses import field
 from urllib import request
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import ProfilDonneurForm, ProfilDonneurUpdateForm
 from django.contrib import messages
-from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from comptes.models import Utilisateur
 from django.core.exceptions import PermissionDenied
+from notifications.models import Notification
 
 @login_required
 def devenir_donneur(request):
@@ -63,20 +64,24 @@ def profil_donneur(request):
 @login_required
 def modifier_profil_donneur(request):
     # ADMIN et HÔPITAL interdits
-    if request.user.role in [request.user.Role.ADMIN, request.user.Role.HOPITAL]:
+    if request.user.role in [request.user.Role.ADMIN, request.user.Role.HOPITAL, request.user.Role.DEMANDEUR]:
         raise PermissionDenied("Accès réservé aux donneurs")
+    else :
+        profil = request.user.profil_donneur
 
-    profil = request.user.profil_donneur
+        if request.method == 'POST':
+            form = ProfilDonneurUpdateForm(request.POST, instance=profil)
+            
 
-    if request.method == 'POST':
-        form = ProfilDonneurUpdateForm(request.POST, instance=profil)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Profil mis à jour.")
-            return redirect('profil_donneur')
-    else:
-        form = ProfilDonneurUpdateForm(instance=profil)
-
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Profil mis à jour.")
+                return redirect('profil_donneur')
+        else:
+            form = ProfilDonneurUpdateForm(instance=profil)
+    
+    for field in form.fields.values():
+        field.widget.attrs.update({'class': 'form-control'})
     return render(request, 'modifier_profil.html', {'form': form})
 
 # @login_required
@@ -94,4 +99,16 @@ def modifier_profil_donneur(request):
 #         form = ProfilDonneurUpdateForm(instance=profil)
 
 #     return render(request, 'modifier_profil.html', {'form': form})
+
+@login_required
+def dashboard_don(request):
+
+    if request.user.role != Utilisateur.Role.DONNEUR:
+            messages.error(request, "Accès réservé aux donneurs.")
+            return redirect('accueil')  
+    else: 
+        profil = request.user.profil_donneur
+        #notifications = Notification.objects.filter(utilisateur=request.user.notifications).order_by('-date_creation')[:5]
+        #notifications = request.user.notifications.order_by('-date_creation')
+        return render(request, 'dashboard_donneur.html', {'profil': profil})
 

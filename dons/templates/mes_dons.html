@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard Donneur{% endblock %}
+
+{% block content %}
+
+<h2>Historique de mes dons</h2>
+
+{% if dons %}
+    <ul>
+        {% for don in dons %}
+            <li>
+                {{ don.date_don }} – {{ don.groupe_sanguin }} – {{ don.volume_ml }} ml
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Aucun don enregistré.</p>
+{% endif %}
+{% endblock %}

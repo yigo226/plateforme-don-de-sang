@@ -17,6 +17,5 @@ urlpatterns = [
     
     #liste des utilisateurs
     path('users/', views.liste_utilisateurs, name='liste_utilisateurs'),
-    path('dashboard_don/', views.dashboard_don, name='dashboard_don'),
     
 ]

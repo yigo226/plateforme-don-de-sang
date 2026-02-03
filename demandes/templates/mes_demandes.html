@@ -1,17 +1,74 @@
-<h2>Mes demandes</h2>
+{% extends 'base.html' %}
 
-{% for d in demandes %}
-<div>
-    <strong>{{ d.groupe_sanguin }}</strong> – {{ d.statut }}<br>
-    {{ d.ville }} | {{ d.hopital_affiche }}<br>
+{% block title %}Mes demandes{% endblock %}
 
-    {% if d.statut == 'ACTIVE' %}
-        <a href="{% url 'cloturer_demande' d.id %}">
-            Marquer comme satisfaite
-        </a>
-    {% endif %}
+{% block content %}
+<div class="container mt-5">
+
+    <!-- HEADER -->
+    <div class="text-center mb-4">
+        <h2 class="fw-bold">Mes demandes</h2>
+        <p class="text-muted">
+            Suivez l’état de vos demandes de sang en temps réel.
+        </p>
+    </div>
+
+    {% for d in demandes %}
+        <div class="card shadow-sm mb-4 border-0">
+            <div class="card-body">
+
+                <div class="row align-items-center">
+
+                    <!-- GROUPE SANGUIN -->
+                    <div class="col-md-2 text-center mb-3 mb-md-0">
+                        <span class="badge bg-danger fs-5 px-3 py-2">
+                            {{ d.groupe_sanguin }}
+                        </span>
+                    </div>
+
+                    <!-- INFOS -->
+                    <div class="col-md-7">
+                        <p class="mb-1">
+                            <strong>Statut :</strong>
+                            {% if d.statut == 'ACTIVE' %}
+                                <span class="badge bg-success">Active</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Satisfaite</span>
+                            {% endif %}
+                        </p>
+
+                        <p class="mb-1">
+                            <strong>Ville :</strong> {{ d.ville }}
+                        </p>
+
+                        <p class="mb-1">
+                            <strong>Hôpital :</strong> {{ d.hopital_affiche }}
+                        </p>
+                    </div>
+
+                    <!-- ACTION -->
+                    <div class="col-md-3 text-md-end text-center mt-3 mt-md-0">
+                        {% if d.statut == 'ACTIVE' %}
+                            <a href="{% url 'cloturer_demande' d.id %}" 
+                               class="btn btn-outline-success btn-lg">
+                                ✔ Marquer comme satisfaite
+                            </a>
+                        {% else %}
+                            <span class="text-muted fst-italic">
+                                Demande clôturée
+                            </span>
+                        {% endif %}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    {% empty %}
+        <div class="alert alert-info text-center py-4">
+            <p class="mb-0">Aucune demande pour le moment.</p>
+        </div>
+    {% endfor %}
+
 </div>
-<hr>
-{% empty %}
-<p>Aucune demande.</p>
-{% endfor %}
+{% endblock %}

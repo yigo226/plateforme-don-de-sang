@@ -1,11 +1,48 @@
 {% extends "base.html" %}
-{% block content %}
-<h2>Devenir donneur</h2>
-<p>Veuillez compléter vos informations pour devenir donneur.</p>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Valider</button>
-</form>
+{% block title %}Devenir Donneur{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-danger text-white text-center py-3">
+                    <h4 class="mb-0">Devenir Donneur de Sang</h4>
+                    <small>Votre geste peut sauver des vies ❤️</small>
+                </div>
+
+                <div class="card-body p-4">
+                    <p class="text-center mb-4">
+                        Complétez vos informations afin de rejoindre notre communauté de donneurs.
+                    </p>
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <!-- Champs du formulaire -->
+                        <div class="mb-3">
+                            {{ form }}
+                        </div>
+
+                        <!-- Bouton -->
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-outline-danger btn-lg">
+                                Valider mon inscription comme donneur
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card-footer text-center bg-light">
+                    <small>
+                        Vos informations sont sécurisées et ne seront utilisées que pour les demandes de don.
+                    </small>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 {% endblock %}

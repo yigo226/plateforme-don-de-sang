@@ -1,26 +1,124 @@
 {% extends "base.html" %}
+
+{% block title %}Mon Profil Donneur{% endblock %}
+
 {% block content %}
-<h2>Mon Profil Donneur</h2>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
 
-<ul>
-    <li><strong>Nom utilisateur :</strong> {{ user.identifiant }}</li>
-    <li><strong>Nom et Prénom :</strong> {{ user.first_name }} {{ user.last_name }}</li>
-    <li><strong>Email :</strong> {{ user.email }}</li>
-    <li><strong>Âge :</strong> {{ profil.age }}</li>
-    <li><strong>Poids :</strong> {{ profil.poids }} kg</li>
-    <li>
-        <strong>Dernier don :</strong>
-        {% if profil.date_dernier_don %}
-            {{ profil.date_dernier_don|date:"d/m/Y" }}
-        {% else %}
-            <em>Aucun don enregistré</em>
-        {% endif %}
-    </li>
+            <div class="card shadow-lg border-0">
+                <!-- HEADER -->
+                <div class="card-header bg-danger text-white text-center py-3">
+                    <h4 class="mb-0">Mon Profil Donneur</h4>
+                    <small>Vos informations personnelles et médicales</small>
+                </div>
 
-    <li><strong>Groupe sanguin :</strong> {{ profil.groupe_sanguin }}</li>
-    <li><strong>Groupe sanguin confirmé :</strong> {{ profil.groupe_sanguin_verrouille }}</li>
-</ul>
+                <!-- BODY -->
+                <div class="card-body p-4">
 
-<a href="{% url 'modifier_profil_donneur' %}">Modifier mon profil</a>
+                    <!-- INFOS PRINCIPALES -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="border rounded p-3 h-100">
+                                <p class="mb-2">
+                                    <strong>Nom utilisateur :</strong><br>
+                                    <span class="text-muted">{{ user.identifiant }}</span>
+                                </p>
 
+                                <p class="mb-2">
+                                    <strong>Nom & Prénom :</strong><br>
+                                    <span class="text-muted">{{ user.first_name }} {{ user.last_name }}</span>
+                                </p>
+
+                                <p class="mb-0">
+                                    <strong>Email :</strong><br>
+                                    <span class="text-muted">{{ user.email }}</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="border rounded p-3 h-100">
+                                <p class="mb-2">
+                                    <strong>Âge :</strong><br>
+                                    <span class="text-muted">{{ profil.age }} ans</span>
+                                </p>
+
+                                <p class="mb-2">
+                                    <strong>Poids :</strong><br>
+                                    <span class="text-muted">{{ profil.poids }} kg</span>
+                                </p>
+
+                                <p class="mb-0">
+                                    <strong>Dernier don :</strong><br>
+                                    {% if profil.date_dernier_don %}
+                                        <span class="text-muted">
+                                            {{ profil.date_dernier_don|date:"d/m/Y" }}
+                                        </span>
+                                    {% else %}
+                                        <span class="text-muted fst-italic">
+                                            Aucun don enregistré
+                                        </span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GROUPE SANGUIN -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="border rounded p-3 h-100">
+                                <p class="mb-0">
+                                    <strong>Groupe sanguin :</strong><br>
+                                    <span class="badge bg-danger fs-6 mt-1">
+                                        {{ profil.groupe_sanguin }}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="border rounded p-3 h-100">
+                                <p class="mb-0">
+                                    <strong>Groupe sanguin confirmé :</strong><br>
+                                    {% if profil.groupe_sanguin_verrouille %}
+                                        <span class="badge bg-success fs-6 mt-1">
+                                            Confirmé
+                                        </span>
+                                    {% else %}
+                                        <span class="badge bg-warning text-dark fs-6 mt-1">
+                                            Non confirmé
+                                        </span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ACTIONS -->
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{% url 'dashboard_don' %}" class="btn btn-outline-secondary btn-lg">
+                            Retour au tableau de bord
+                        </a>
+
+                        <a href="{% url 'modifier_profil_donneur' %}" class="btn btn-danger btn-lg">
+                            Modifier mon profil
+                        </a>
+                    </div>
+
+                </div>
+
+                <!-- FOOTER -->
+                <div class="card-footer text-center bg-light">
+                    <small>
+                        Vos données sont sécurisées et utilisées uniquement pour faciliter les demandes de don de sang.
+                    </small>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 {% endblock %}

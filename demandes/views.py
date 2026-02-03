@@ -35,6 +35,9 @@ def creer_demande(request):
             return redirect('mes_demandes')
     else:
         form = DemandeSangForm(user=request.user)
+    
+    for field in form.fields.values():
+        field.widget.attrs.update({'class': 'form-control'})
 
     return render(request, 'creer_demande.html', {'form': form})
 
@@ -56,6 +59,7 @@ def demandes_compatibles(request):
         ville__iexact=donneur.utilisateur.ville,
         groupe_sanguin__in=groupes_receveurs
     ).order_by('-date_demande')
+    
 
     return render(
         request,

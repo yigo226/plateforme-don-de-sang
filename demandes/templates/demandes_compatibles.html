@@ -1,14 +1,63 @@
-<h2>Demandes compatibles dans votre ville</h2>
+{% extends 'base.html' %}
 
-{% for d in demandes %}
-<div>
-    <strong>{{ d.groupe_sanguin }}</strong> requis<br>
-    Ville : {{ d.ville }}<br>
-    Hôpital : {{ d.hopital_affiche }}<br>
-    Motif : {{ d.motif }}<br>
-    📞 Contact : {{ d.contact }}
+{% block title %}Demandes compatibles{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <!-- HEADER -->
+    <div class="text-center mb-4">
+        <h2 class="fw-bold">Demandes compatibles dans votre ville</h2>
+        <p class="text-muted">
+            Voici les demandes de sang correspondant à votre groupe sanguin et à votre localisation.
+        </p>
+    </div>
+
+    {% for d in demandes %}
+        <div class="card shadow-sm mb-4 border-0">
+            <div class="card-body">
+
+                <div class="row align-items-center">
+
+                    <!-- GROUPE SANGUIN -->
+                    <div class="col-md-2 text-center mb-3 mb-md-0">
+                        <span class="badge bg-danger fs-5 px-3 py-2">
+                            {{ d.groupe_sanguin }}
+                        </span>
+                    </div>
+
+                    <!-- INFOS -->
+                    <div class="col-md-7">
+                        <p class="mb-1">
+                            <strong>Ville :</strong> {{ d.ville }}
+                        </p>
+                        <p class="mb-1">
+                            <strong>Hôpital :</strong> {{ d.hopital_affiche }}
+                        </p>
+                        <p class="mb-1">
+                            <strong>Motif :</strong> {{ d.motif }}
+                        </p>
+                        <p class="mb-0">
+                            <strong>Contact :</strong> {{ d.contact }}
+                        </p>
+                    </div>
+
+                    <!-- ACTION -->
+                    <div class="col-md-3 text-md-end text-center mt-3 mt-md-0">
+                        <a href="tel:{{ d.contact }}" class="btn btn-outline-danger btn-lg">
+                            📞 Appeler
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    {% empty %}
+        <div class="alert alert-info text-center py-4">
+            <p class="mb-0">Aucune demande pour le moment.</p>
+        </div>
+    {% endfor %}
+
 </div>
-<hr>
-{% empty %}
-<p>Aucune demande pour le moment.</p>
-{% endfor %}
+{% endblock %}

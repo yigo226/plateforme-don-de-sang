@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     # Donneur
     path('declarer/', views.declarer_don, name='declarer_don'),
+    path('mes-dons/', views.mes_dons, name='mes_dons'),
 
     # Hôpital
     path('a-valider/', views.dons_a_valider, name='dons_a_valider'),

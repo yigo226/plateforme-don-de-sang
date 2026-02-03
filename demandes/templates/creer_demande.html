@@ -1,15 +1,55 @@
 {% extends 'base.html' %}
 
-{% block titre %} Création d'une demande de sang{% endblock %}
+{% block title %}Création d'une demande de sang{% endblock %}
 
 {% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
 
-<h2>Demande de sang</h2>
+            <div class="card shadow-lg border-0">
+                <!-- HEADER -->
+                <div class="card-header bg-danger text-white text-center py-3">
+                    <h4 class="mb-0">Demande de Sang</h4>
+                    <small>Chaque demande peut sauver une vie ❤️</small>
+                </div>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Envoyer</button>
-</form>
+                <!-- BODY -->
+                <div class="card-body p-4">
+                    <p class="text-center mb-4">
+                        Veuillez remplir les informations ci-dessous pour publier une demande de sang.
+                    </p>
 
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <!-- CHAMPS -->
+                        <div class="mb-3">
+                            {{ form }}
+                        </div>
+
+                        <!-- BOUTONS -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{% url 'accueil' %}" class="btn btn-outline-secondary btn-lg">
+                                Annuler
+                            </a>
+
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                Envoyer la demande
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- FOOTER -->
+                <div class="card-footer text-center bg-light">
+                    <small>
+                        Votre demande sera visible par les donneurs disponibles dans votre zone.
+                    </small>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 {% endblock %}

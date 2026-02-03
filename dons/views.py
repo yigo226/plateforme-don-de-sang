@@ -43,6 +43,18 @@ def declarer_don(request):
 
     return render(request, 'declarer_don.html', {'form': form})
 
+@login_required
+def mes_dons(request):
+    if request.user.role != Utilisateur.Role.DONNEUR:
+        messages.error(request, "Accès réservé aux donneurs.")
+        return redirect('accueil')
+
+    donneur = request.user.profil_donneur
+    dons = Don.objects.filter(donneur=donneur).order_by('-date_don')
+
+    return render(request, 'mes_dons.html', {
+        'dons': dons
+    })
 
 # ==========================
 # HÔPITAL
@@ -101,23 +113,3 @@ def valider_don(request, don_id):
         'valider_don.html',
         {'form': form, 'don': don}
     )
-
-# @login_required
-# def valider_don(request, don_id):
-#     if request.user.role != Utilisateur.Role.HOPITAL:
-#         messages.error(request, "Accès refusé.")
-#         return redirect('accueil')
-#     else : 
-#         hopital = request.user.hopital
-
-#     don = get_object_or_404(Don, id=don_id, hopital=hopital)
-
-#     don.valide = True
-#     don.save()
-
-#     donneur = don.donneur
-#     donneur.date_dernier_don = don.date_don
-#     donneur.save()
-
-#     messages.success(request, "Don validé avec succès.")
-#     return redirect('dons_a_valider')

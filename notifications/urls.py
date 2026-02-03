@@ -6,7 +6,7 @@ app_name = 'notifications'
 
 urlpatterns = [
     path(
-        '',
+        'mes_notifications/',
         views.mes_notifications,
         name='liste'
     ),
