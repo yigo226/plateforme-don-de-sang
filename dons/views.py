@@ -23,7 +23,7 @@ def declarer_don(request):
             request,
             "Vous ne pouvez pas encore faire un don (délai médical)."
         )
-        return redirect('profil_donneur')
+        return render(request, 'attente_don.html')
 
     if request.method == 'POST':
         form = DeclarationDonForm(request.POST)
@@ -40,6 +40,8 @@ def declarer_don(request):
             return redirect('profil_donneur')
     else:
         form = DeclarationDonForm()
+    for field in form.fields.values():
+        field.widget.attrs.update({'class': 'form-control'})
 
     return render(request, 'declarer_don.html', {'form': form})
 

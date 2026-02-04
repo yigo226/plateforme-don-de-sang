@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Détail de la notification{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        🔔 Détail de la notification
+                    </h5>
+                </div>
+
+                <div class="card-body">
+                    <p class="fs-5">
+                        {{ notification.message }}
+                    </p>
+
+                    <hr>
+
+                    <p class="text-muted mb-2">
+                        📅 Reçue le :
+                        {{ notification.date_creation|date:"d/m/Y à H:i" }}
+                    </p>
+
+                    <p>
+                        Statut :
+                        {% if notification.lu %}
+                            <span class="badge bg-secondary">Lue</span>
+                        {% else %}
+                            <span class="badge bg-success">Non lue</span>
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div class="card-footer d-flex justify-content-between">
+                    <a href="javascript:history.back()"
+                       class="btn btn-outline-secondary">
+                        🔙 Retour
+                    </a>
+
+                    {% if notification.demande %}
+                        <a href="{% url 'detail_demande' notification.demande.id %}"
+                           class="btn btn-success">
+                            Voir la demande liée
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

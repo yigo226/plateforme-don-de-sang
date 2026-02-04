@@ -1,18 +1,55 @@
 {% extends "base.html" %}
+
+{% block title %}Déclarer un don{% endblock %}
+
 {% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
 
-<h2>Déclarer un don</h2>
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-success text-white text-center py-3">
+                    <h4 class="mb-0">Déclarer un Don de Sang</h4>
+                    <small>Votre geste compte ❤️</small>
+                </div>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Confirmer</button>
-</form>
+                <div class="card-body p-4">
+                    <p class="text-center mb-4">
+                        Remplissez ce formulaire pour déclarer votre don.
+                    </p>
 
-<!-- Affichage les demandes compatibles les plus proches de moi-->
-<h3>Demandes compatibles proches de moi</h3>
-<div>
-    <a href="{% url 'demandes_compatibles' %}">Voir les demandes compatibles</a>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            {{ form }}
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                Confirmer le don
+                            </button>
+                        </div>
+                    </form>
+
+                    <hr class="my-4">
+
+                    <div class="text-center">
+                        <h6 class="mb-3">Demandes proches de vous</h6>
+                        <a href="{% url 'demandes_compatibles' %}" 
+                           class="btn btn-outline-success btn-lg">
+                            Les demandes de ma région
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card-footer text-center bg-light">
+                    <small>
+                        Vos informations sont traitées en toute confidentialité.
+                    </small>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
-
 {% endblock %}

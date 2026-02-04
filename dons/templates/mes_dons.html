@@ -3,18 +3,61 @@
 {% block title %}Dashboard Donneur{% endblock %}
 
 {% block content %}
+<div class="container mt-5">
 
-<h2>Historique de mes dons</h2>
+    <div class="text-center mb-4">
+        <h2 class="fw-bold">Historique de mes dons</h2>
+        <p class="text-muted">
+            Retrouvez tous vos dons enregistrés.
+        </p>
+    </div>
 
-{% if dons %}
-    <ul>
+    {% if dons %}
         {% for don in dons %}
-            <li>
-                {{ don.date_don }} – {{ don.groupe_sanguin }} – {{ don.volume_ml }} ml
-            </li>
+            <div class="card shadow-sm mb-3 border-0">
+                <div class="card-body">
+
+                    <div class="row align-items-center">
+
+                        <div class="col-md-2 text-center mb-2 mb-md-0">
+                            <span class="badge bg-danger fs-6 px-3 py-2">
+                                {{ don.groupe_sanguin }}
+                            </span>
+                        </div>
+
+                        <div class="col-md-2">
+                            <p class="mb-1">
+                                <strong>Date :</strong> {{ don.date_don|date:"d/m/Y" }}
+                            </p>
+                              
+                        </div>
+                        <div class="col-md-2 ">
+                            <p class="mb-1">
+                               <strong>Volume :</strong> {{ don.volume_ml }} ml
+                            </p>
+                        </div>
+                        <div class="col-md-3 ">
+                            <strong class="badge text-dark">
+                                {{ don.hopital}}
+                            </strong>
+                        </div>
+
+                        <div class="col-md-3 ">
+                            <span class="badge bg-success">
+                                Enregistré
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
         {% endfor %}
-    </ul>
-{% else %}
-    <p>Aucun don enregistré.</p>
-{% endif %}
+    {% else %}
+        <div class="alert alert-info text-center py-4">
+            <p class="mb-0">Aucun don enregistré.</p>
+        </div>
+    {% endif %}
+
+</div>
 {% endblock %}

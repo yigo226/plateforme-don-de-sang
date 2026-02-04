@@ -10,7 +10,9 @@ from notifications.utils import notifier_donneurs
 from notifications.models import Notification
 
 # Create your views here.
-
+# ==========================
+# DEMANDES DE SANG
+# ==========================
 @login_required
 def creer_demande(request):
     if request.method == 'POST':
@@ -41,6 +43,9 @@ def creer_demande(request):
 
     return render(request, 'creer_demande.html', {'form': form})
 
+#=========================
+# VUES POUR DONNEURS
+#=========================
 @login_required
 def demandes_compatibles(request):
     if request.user.role != Utilisateur.Role.DONNEUR:
@@ -67,6 +72,9 @@ def demandes_compatibles(request):
         {'demandes': demandes}
     )
 
+#=========================
+# VUES POUR HÔPITAUX
+#=========================
 @login_required
 def mes_demandes(request):
     demandes = DemandeSang.objects.filter(
@@ -79,6 +87,38 @@ def mes_demandes(request):
         {'demandes': demandes}
     )
 
+#=========================
+# VUES POUR HÔPITAUX
+#=========================
+@login_required
+def demandes_hopital(request):
+    if request.user.role != Utilisateur.Role.HOPITAL:
+        messages.error(request, "Accès refusé.")
+        return redirect('accueil')
+
+    hopital = request.user.hopital
+    demandes = DemandeSang.objects.filter(
+        hopital=hopital
+    ).order_by('-date_demande')
+
+    return render(
+        request,
+        'demandes_hopital.html',
+        {'demandes': demandes}
+    )
+
+#========================
+# DETAILS D'UNE DEMANDE
+#=========================
+@login_required
+def detail_demande(request, demande_id):
+    demande = get_object_or_404(DemandeSang, id=demande_id)
+    return render(request, "detail_demande.html", {"demande": demande})
+
+
+#=========================
+# CLOTURER UNE DEMANDE
+#=========================
 @login_required
 def cloturer_demande(request, demande_id):
     demande = get_object_or_404(
@@ -93,7 +133,9 @@ def cloturer_demande(request, demande_id):
     messages.success(request, "Demande clôturée avec succès.")
     return redirect('mes_demandes')
 
-
+#=========================
+# REPONDRE A UNE DEMANDE
+#=========================
 @login_required
 def repondre_demande(request, demande_id):
     demande = DemandeSang.objects.get(id=demande_id)
@@ -104,7 +146,6 @@ def repondre_demande(request, demande_id):
         donneur=donneur,
         message="Je suis disponible pour ce don."
     )
-
     # 🔔 notifier le demandeur
     Notification.objects.create(
         destinataire=demande.auteur,
@@ -115,6 +156,5 @@ def repondre_demande(request, demande_id):
         ),
         lien=f"/demandes/{demande.id}/"
     )
-
     return redirect('profil_donneur')
 

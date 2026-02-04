@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Détails de la demande{% endblock %}
+
+{% block content %}
+
+<div style="max-width: 700px; margin: 50px auto; padding: 30px; background-color: #f8f9fa; border-radius: 10px; box-shadow: 0 0 12px rgba(0,0,0,0.1);">
+
+    <h2 style="text-align: center; color: #dc3545;">🩸 Détails de la demande de sang</h2>
+
+    <hr>
+
+    <p><strong>Groupe sanguin requis :</strong> {{ demande.groupe_sanguin }}</p>
+    <p><strong>Volume demandé :</strong> {{ demande.volume_ml }} ml</p>
+    <p><strong>Ville :</strong> {{ demande.ville }}</p>
+    <p><strong>Hôpital :</strong> {{ demande.hopital_affiche }}</p>
+    <p><strong>Motif :</strong> {{ demande.motif }}</p>
+    <p><strong>Contact :</strong> 📞 {{ demande.contact }}</p>
+    <p>
+        <strong>Date de la demande :</strong>
+        {{ demande.date_demande|date:"d/m/Y H:i" }}
+    </p>
+
+    <p>
+        <strong>Statut :</strong>
+        {% if demande.statut == "ACTIVE" %}
+            <span style="color: green;">Active</span>
+        {% else %}
+            <span style="color: gray;">Clôturée</span>
+        {% endif %}
+    </p>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <button onclick="history.back()" class="btn btn-secondary">
+            🔙 Retour
+        </button>
+
+        {% if demande.statut == "ACTIVE" %}
+            <a href="{% url 'cloturer_demande' demande.id %}"
+               style="padding: 10px 20px; background-color: #dc3545; color: white; text-decoration: none; border-radius: 5px; margin-left: 10px;">
+                ✅ Marquer comme satisfaite
+            </a>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}

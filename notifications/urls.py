@@ -10,7 +10,11 @@ urlpatterns = [
         views.mes_notifications,
         name='liste'
     ),
-
+    path(
+        'detail/<int:notif_id>/',
+        views.detail_notification,
+        name='detail_notification'
+    ),
     path(
         'lire/<int:notification_id>/',
         views.marquer_comme_lu,

@@ -108,7 +108,5 @@ def dashboard_don(request):
             return redirect('accueil')  
     else: 
         profil = request.user.profil_donneur
-        #notifications = Notification.objects.filter(utilisateur=request.user.notifications).order_by('-date_creation')[:5]
-        #notifications = request.user.notifications.order_by('-date_creation')
         return render(request, 'dashboard_donneur.html', {'profil': profil})
 

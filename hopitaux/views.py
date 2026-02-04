@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Hopital
 from comptes.models import Utilisateur
+from dons.models import Don
 # Create your views here.
 
 @login_required
@@ -35,6 +36,23 @@ def creer_hopital(request):
 def dashboard_hopital(request):
     if request.user.role != Utilisateur.Role.HOPITAL:
         return redirect('accueil')
+    
+    else:
+        #Utilisateur = request.user
+        hopital = request.user.hopital
 
-    hopital = request.user.hopital
-    return render(request, 'dashboard.html', {'hopital': hopital})
+        # Compteur pour les dons en attente
+        dons_en_attente = Don.objects.filter(hopital=hopital, valide=False).count()
+        
+        # Compteur pour les dons validés
+        dons_valides_count = Don.objects.filter(hopital=hopital, valide=True).count()
+        
+        context = {
+            'dons_count': dons_en_attente,
+            'dons_valides': dons_valides_count,
+        }
+        #return render(request, 'votre_template.html', context)
+        
+        
+        return render(request, 'dashboard.html', {'hopital': hopital, 'Utilisateur': request.user, **context})
+  

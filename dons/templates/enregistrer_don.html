@@ -1,12 +1,51 @@
 {% extends "base.html" %}
+
+{% block title %}Enregistrer un don{% endblock %}
+
 {% block content %}
 
-<h2>Enregistrer un don</h2>
+<!-- Ce fichier n'est pas lier a un snippet existant.
+Il a juste servi lors du processus d'edition et de conception.
+Il n'y a pas de comparaison a faire ici. -->
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Enregistrer</button>
-</form>
 
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-success text-white text-center py-3">
+                    <h4 class="mb-0">Enregistrer un Don</h4>
+                    <small>Validation finale du don de sang</small>
+                </div>
+
+                <div class="card-body p-4">
+                    <p class="text-center mb-4">
+                        Veuillez compléter les informations pour enregistrer ce don.
+                    </p>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            {{ form }}
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                Enregistrer le don
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card-footer text-center bg-light">
+                    <small>
+                        Ce don sera ajouté à l’historique du donneur.
+                    </small>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 {% endblock %}

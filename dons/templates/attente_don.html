@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Don temporairement indisponible{% endblock %}
+
+{% block content %}
+
+<div style="max-width: 600px; margin: 50px auto; text-align: center; padding: 30px; border-radius: 10px; background-color: #f8f9fa; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+
+    <h2 style="color: #dc3545;">⏳ Don temporairement indisponible</h2>
+
+    <p style="font-size: 18px; margin-top: 20px;">
+        Merci pour votre engagement en tant que donneur ❤️
+    </p>
+
+    <p>
+        Vous avez récemment effectué un don de sang.  
+        Pour votre sécurité et celle des receveurs, vous devez attendre
+        <strong>3 mois</strong> avant de pouvoir donner à nouveau.
+    </p>
+
+    <p style="margin-top: 20px;">
+        Nous comptons sur vous pour revenir très bientôt 💪
+    </p>
+
+    <a href="{% url 'accueil' %}" 
+       style="display: inline-block; margin-top: 30px; padding: 12px 25px; background-color: #dc3545; color: white; text-decoration: none; border-radius: 5px;">
+        🏠 Retour à l'accueil
+    </a>
+
+</div>
+
+{% endblock %}

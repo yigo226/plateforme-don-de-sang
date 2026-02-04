@@ -1,18 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width= , initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-    <h2>Dashboard Hôpital</h2>
+{% extends "base.html" %}
 
-<p><strong>Nom :</strong> {{ hopital.nom }}</p>
-<p><strong>Ville :</strong> {{ hopital.ville }}</p>
-<p><strong>Téléphone :</strong> {{ hopital.telephone }}</p>
-<p><strong>Adresse :</strong> {{ hopital.adresse }}</p>
+{% block title %}Dashboard Hôpital{% endblock %}
 
-</body>
-</html>
+{% block content %}
+<div class="container py-4">
+
+    <!-- Titre -->
+    <div class="mb-4 text-center">
+        <h1 class="display-4 text-decoration">Dashboard Hôpital</h1>
+    </div>
+
+    <!-- Infos hôpital -->
+    <div class="card shadow-sm mb-4 text-center">
+        <div class="card-header bg-danger text-white">
+            <h5 class="mb-0">Informations de l’hôpital</h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6 col-12">
+                    <strong>Nom</strong>
+                    <p class="mb-0 text-muted">{{ hopital.nom }}</p>
+                </div>
+
+                <div class="col-md-6 col-12">
+                    <strong>Ville</strong>
+                    <p class="mb-0 text-muted">{{ hopital.ville }}</p>
+                </div>
+
+                <div class="col-md-6 col-12">
+                    <strong>Téléphone</strong>
+                    <p class="mb-0 text-muted">{{ hopital.telephone }}</p>
+                </div>
+
+                <div class="col-md-6 col-12">
+                    <strong>Adresse</strong>
+                    <p class="mb-0 text-muted">{{ hopital.adresse }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistiques -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-4 col-12">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Demandes en attente</h6>
+                    <h3 class="fw-bold text-danger">
+                        <span class="badge bg-danger">{{ dons_count }}</span>
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-12">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Dons validés</h6>
+                    <h3 class="fw-bold text-success">
+                        {{ dons_valides|default:0 }}
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-12">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <a href="{% url 'demandes_hopital' %}" class="btn btn-danger w-100">
+                        <h1> </h1>
+                    <h6 class="text-muted">Mes patients</h6>
+                    <h3 class="fw-bold text-secondary"></h3>
+                    <h1> </h1>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actions principales -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-light">
+            <h5 class="mb-0">Actions rapides</h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-3 text-center">
+                <div class="col-md-4 col-12">
+                    <a href="{% url 'mes_demandes' %}" class="btn btn-danger w-100">
+                        📥 Voir mes demandes de sang
+                    </a>
+                </div>
+
+                <div class="col-md-4 col-12">
+                    <a href="{% url 'dons_a_valider' %}" class="btn btn-outline-danger w-100">
+                        ✅ Valider les dons 
+                    </a>
+                </div>
+
+                <div class="col-md-4 col-12">
+                    <a href="{% url 'profil_utilisateur'%}" class="btn btn-outline-secondary w-100">
+                        📝 Mon profil
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

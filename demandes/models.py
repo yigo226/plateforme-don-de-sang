@@ -92,7 +92,7 @@ class DemandeSang(models.Model):
     def __str__(self):
         return f"{self.groupe_sanguin} - {self.volume_ml}ml ({self.ville})"
 
-# demandes/models.py
+
 class ReponseDonneur(models.Model):
     demande = models.ForeignKey(DemandeSang, on_delete=models.CASCADE)
     donneur = models.ForeignKey(ProfilDonneur, on_delete=models.CASCADE)
