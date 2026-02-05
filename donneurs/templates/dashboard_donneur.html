@@ -27,7 +27,8 @@
                     </a>
 
                     <a href="{% url 'notifications:liste' %}" class="btn btn-outline-secondary">
-                        🔔 Notifications
+                        🔔 Notifications 
+                                <span class="text-danger"> {{ nb_non_lues | default:"0"}} </span>
                     </a>
                 </div>
             </div>

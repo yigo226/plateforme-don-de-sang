@@ -1,29 +1,68 @@
-<h2>Stock de sang</h2>
+{% extends "base.html" %}
 
-<table border="1" cellpadding="8">
-    <tr>
-        <th>Groupe sanguin</th>
-        <th>Volume (ml)</th>
-        <th>Statut</th>
-    </tr>
+{% block title %}Stock de sang{% endblock %}
 
-    {% for stock in stocks %}
-    <tr>
-        <td>{{ stock.groupe_sanguin }}</td>
-        <td>{{ stock.volume_ml }}</td>
-        <td>
-            {% if stock.est_bas %}
-                <span style="color:red;font-weight:bold;">
-                    ⚠ Stock critique
-                </span>
-            {% else %}
-                ✅ OK
-            {% endif %}
-        </td>
-    </tr>
-    {% empty %}
-    <tr>
-        <td colspan="3">Aucun stock disponible</td>
-    </tr>
-    {% endfor %}
-</table>
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">
+                        🩸 État du stock de sang
+                    </h5>
+                </div>
+
+                <div class="card-body p-0">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Groupe sanguin</th>
+                                <th>Volume (ml)</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for stock in stocks %}
+                                <tr>
+                                    <td class="fw-bold">
+                                        {{ stock.groupe_sanguin }}
+                                    </td>
+                                    <td>
+                                        {{ stock.volume_ml }} ml
+                                    </td>
+                                    <td>
+                                        {% if stock.est_bas %}
+                                            <span class="badge bg-danger">
+                                                ⚠ Stock critique
+                                            </span>
+                                        {% else %}
+                                            <span class="badge bg-success">
+                                                ✅ Suffisant
+                                            </span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="3" class="text-center text-muted py-4">
+                                        Aucun stock disponible
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-footer text-center bg-light">
+                    <a href="javascript:history.back()" class="btn btn-outline-secondary">
+                        🔙 Retour
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

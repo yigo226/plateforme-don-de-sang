@@ -106,7 +106,10 @@ def dashboard_don(request):
     if request.user.role != Utilisateur.Role.DONNEUR:
             messages.error(request, "Accès réservé aux donneurs.")
             return redirect('accueil')  
+    # nombre de notifications non lues pour le donneur
+    
     else: 
         profil = request.user.profil_donneur
-        return render(request, 'dashboard_donneur.html', {'profil': profil})
-
+        nb_non_lues = request.user.notifications.filter(lu=False).count()
+        
+        return render(request, 'dashboard_donneur.html', {'profil': profil, 'nb_non_lues': nb_non_lues})

@@ -1,3 +1,4 @@
+from pyexpat.errors import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
@@ -7,10 +8,15 @@ from .models import Notification
 @login_required
 def mes_notifications(request):
     notifications = request.user.notifications.order_by('-date_creation')
+    
+    #nb_non_lues = notifications.filter(lu=False).count()
     return render(
         request,
         'liste.html',
-        {'notifications': notifications}
+        {
+            'notifications': notifications,
+            #'nb_non_lues': nb_non_lues
+        }
     )
 
 @login_required

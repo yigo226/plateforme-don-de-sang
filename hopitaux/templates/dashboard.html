@@ -42,7 +42,7 @@
 
     <!-- Statistiques -->
     <div class="row g-4 mb-4">
-        <div class="col-md-4 col-12">
+        <div class="col-md-3 col-12">
             <div class="card text-center shadow-sm">
                 <div class="card-body">
                     <h6 class="text-muted">Demandes en attente</h6>
@@ -53,7 +53,7 @@
             </div>
         </div>
 
-        <div class="col-md-4 col-12">
+        <div class="col-md-3 col-12">
             <div class="card text-center shadow-sm">
                 <div class="card-body">
                     <h6 class="text-muted">Dons validés</h6>
@@ -64,7 +64,20 @@
             </div>
         </div>
 
-        <div class="col-md-4 col-12">
+        <div class="col-md-3 col-12">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <a href="{% url 'stock_hopital' %}" class="btn btn-success w-100">
+                        <h1> </h1>
+                    <h6 class="text-muted">Stock de sang</h6>
+                    <h3 class="fw-bold text-secondary"></h3>
+                    <h1> </h1>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-12">
             <div class="card text-center shadow-sm">
                 <div class="card-body">
                     <a href="{% url 'demandes_hopital' %}" class="btn btn-danger w-100">
